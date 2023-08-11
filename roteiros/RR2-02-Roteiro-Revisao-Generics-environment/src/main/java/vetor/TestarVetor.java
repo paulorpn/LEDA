@@ -19,5 +19,10 @@ public class TestarVetor {
 		assert maximo.equals(new Aluno("Fulano", 9.3));
 	} 
 
+	@Test
+	public void testaMinimo() {
+		Aluno maximo = alunos.minimo();
+		assert maximo.equals(new Aluno("Ciclano", 6.1));
+	} 
 
 }
