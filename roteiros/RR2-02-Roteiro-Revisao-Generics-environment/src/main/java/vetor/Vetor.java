@@ -28,6 +28,7 @@ public class Vetor<T extends Comparable<T>> {
 		super();
 		this.tamanho = tamanho;
 		this.indice = -1;
+		this.arrayInterno = (T[]) new Comparable[this.tamanho];
 	}
 
 	public void setComparadorMaximo(Comparator<T> comparadorMaximo) {
@@ -66,21 +67,12 @@ public class Vetor<T extends Comparable<T>> {
 
 		for (int i = 0; i <= indice; i++) {
 			if (arrayInterno[i].equals(o)) {
+				result = arrayInterno[i];
 				break;
 			}
 		}
 
 		return result;
-	}
-
-	// Diz se o vetor está vazio
-	public boolean isVazio() {
-		return this.indice == -1;
-	}
-
-	// Diz se o vetor está cheio
-	public boolean isCheio() {
-		return this.indice == this.tamanho - 1;
 	}
 
 	public T maximo() {
