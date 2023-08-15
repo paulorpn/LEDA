@@ -18,8 +18,20 @@ public class RecursiveSelectionSort<T extends Comparable<T>> extends
 	 */
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		// falhei
+		if (leftIndex > rightIndex) {
+			return;
+		}
+
+		for (int i = leftIndex + 1; i <= rightIndex; i++) {
+			if ((int) array[i] < (int) array[leftIndex]) {
+				Util.swap(array, leftIndex, i);
+			}
+		}
+
+		sort(array, leftIndex + 1, rightIndex);
 	}
+
+	
 
 }
 
@@ -27,8 +39,8 @@ public class RecursiveSelectionSort<T extends Comparable<T>> extends
 class Main {
 	public static void main(String[] args) {
 		RecursiveSelectionSort<Integer> selecao = new RecursiveSelectionSort<>();
-		Integer[] lista = {5, 3, 1, 1};
-		selecao.sort(lista, 0, 3);
+		Integer[] lista = {5, 3, 1, 1, 8, 4};
+		selecao.sort(lista, 0, 5);
 		System.out.println(Arrays.toString(lista));
 	}
 }
