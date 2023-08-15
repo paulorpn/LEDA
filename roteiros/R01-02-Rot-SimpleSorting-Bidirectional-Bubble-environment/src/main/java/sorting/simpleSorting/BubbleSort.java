@@ -1,7 +1,7 @@
 package sorting.simpleSorting;
 
 import sorting.AbstractSorting;
-import java.util.Arrays;
+import util.Util;
 
 /**
  * The bubble sort algorithm iterates over the array multiple times, pushing big
@@ -20,17 +20,11 @@ public class BubbleSort<T extends Comparable<T>> extends AbstractSorting<T> {
 
 			for (int i = leftIndex; i < rightIndex; i++) {
 				if ((int) array[i + 1] < (int) array[i]) {
-					swap(array, i, i + 1);
+					Util.swap(array, i, i + 1);
 					sorted = true;
 				}
 			
 			}
 		}
-	}
-
-	public void swap(T[] array, int indiceMenor, int indiceMaior) {
-		T aux = array[indiceMenor];
-		array[indiceMenor] = array[indiceMaior];
-		array[indiceMaior] = aux;
 	}
 }

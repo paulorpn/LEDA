@@ -1,6 +1,7 @@
 package sorting.variationsOfBubblesort;
 
 import sorting.AbstractSorting;
+import util.Util;
 
 public class RecursiveBubbleSort<T extends Comparable<T>> extends
 		AbstractSorting<T> {
@@ -15,8 +16,16 @@ public class RecursiveBubbleSort<T extends Comparable<T>> extends
 	 */
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not Implemented yet!");
-	}
+		if (rightIndex <= leftIndex) {
+			return;
+		}
 
+		for (int i = leftIndex; i < rightIndex; i++) {
+			if ((int) array[i + 1] < (int) array[i]) {
+				Util.swap(array, i + 1, i);
+			}
+		}
+
+		sort(array, leftIndex, rightIndex - 1);
+	}
 }
