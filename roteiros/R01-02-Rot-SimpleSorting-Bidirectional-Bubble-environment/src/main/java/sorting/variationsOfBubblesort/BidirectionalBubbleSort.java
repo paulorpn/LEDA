@@ -1,7 +1,5 @@
 package sorting.variationsOfBubblesort;
 
-import java.util.Arrays;
-
 import sorting.AbstractSorting;
 import util.Util;
 
@@ -23,24 +21,11 @@ public class BidirectionalBubbleSort<T extends Comparable<T>> extends
 				Util.swap(array, i, i + 1);
 			}
 
-			System.out.println(Arrays.toString(array));
-
-			for (int j = rightIndex - i; j > leftIndex; j--) {
+			for (int j = rightIndex; j > i; j--) {
 				if ((int) array[j - 1] > (int) array[j]) {
 					Util.swap(array, j, j - 1);
 				}
-
-				System.out.println(Arrays.toString(array));
 			}
 		}
-	}
-}
-
-class Main {
-	public static void main(String[] args) {
-		BidirectionalBubbleSort<Integer> bi = new BidirectionalBubbleSort<>();
-		Integer[] lista = {5, 3, 1, 1, 8, 4};
-		bi.sort(lista, 0, 5);
-		System.out.println(Arrays.toString(lista));
 	}
 }
