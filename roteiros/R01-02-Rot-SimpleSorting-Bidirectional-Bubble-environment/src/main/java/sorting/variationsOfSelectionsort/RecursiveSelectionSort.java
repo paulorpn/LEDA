@@ -1,7 +1,5 @@
 package sorting.variationsOfSelectionsort;
 
-import java.util.Arrays;
-
 import sorting.AbstractSorting;
 import util.Util;
 
@@ -22,25 +20,20 @@ public class RecursiveSelectionSort<T extends Comparable<T>> extends
 			return;
 		}
 
-		for (int i = leftIndex + 1; i <= rightIndex; i++) {
-			if ((int) array[i] < (int) array[leftIndex]) {
-				Util.swap(array, leftIndex, i);
-			}
-		}
-
+		auxiliar(array, leftIndex, rightIndex, leftIndex);
 		sort(array, leftIndex + 1, rightIndex);
 	}
 
-	
+	public void auxiliar(T[] array, int leftIndex, int rightIndex, int i) {		
+		if (i == rightIndex) {
+			return;
+		}
 
-}
+		if (array[i + 1].compareTo(array[leftIndex]) == -1) {
+				Util.swap(array, leftIndex, i + 1);
+		}
 
-
-class Main {
-	public static void main(String[] args) {
-		RecursiveSelectionSort<Integer> selecao = new RecursiveSelectionSort<>();
-		Integer[] lista = {5, 3, 1, 1, 8, 4};
-		selecao.sort(lista, 0, 5);
-		System.out.println(Arrays.toString(lista));
+		auxiliar(array, leftIndex, rightIndex, i + 1);
 	}
+
 }
