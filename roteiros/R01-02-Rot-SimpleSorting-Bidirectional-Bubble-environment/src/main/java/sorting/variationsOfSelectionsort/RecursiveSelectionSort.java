@@ -16,24 +16,26 @@ public class RecursiveSelectionSort<T extends Comparable<T>> extends
 	 */
 	@Override
 	public void sort(T[] array, int leftIndex, int rightIndex) {
-		if (leftIndex > rightIndex) {
-			return;
-		}
+		if ((leftIndex < rightIndex) && (array != null) && (array.length != 0)
+		 && (leftIndex >= 0) && (rightIndex <= array.length)) {
 
-		auxiliar(array, leftIndex, rightIndex, leftIndex);
-		sort(array, leftIndex + 1, rightIndex);
+			int indiceMenor = auxiliar(array, leftIndex, rightIndex);
+			Util.swap(array, leftIndex, indiceMenor);
+			sort(array, leftIndex + 1, rightIndex);
+		}
 	}
 
-	public void auxiliar(T[] array, int leftIndex, int rightIndex, int i) {		
-		if (i == rightIndex) {
-			return;
+	public int auxiliar(T[] array, int leftIndex, int rightIndex) {
+		int indiceMenor = leftIndex;
+
+		if (leftIndex != rightIndex) {
+			if (array[indiceMenor + 1].compareTo(array[indiceMenor]) == -1) {
+				indiceMenor += 1;
+				auxiliar(array, indiceMenor, rightIndex);
+			}
 		}
 
-		if (array[i + 1].compareTo(array[leftIndex]) == -1) {
-				Util.swap(array, leftIndex, i + 1);
-		}
-
-		auxiliar(array, leftIndex, rightIndex, i + 1);
+		return indiceMenor;
 	}
 
 }
