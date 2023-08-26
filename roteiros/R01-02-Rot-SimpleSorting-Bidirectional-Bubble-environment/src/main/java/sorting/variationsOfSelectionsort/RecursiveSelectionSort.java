@@ -30,7 +30,7 @@ public class RecursiveSelectionSort<T extends Comparable<T>> extends
 		if (i <= rightIndex) {
 			int indiceMenor = leftIndex;
 
-			if (array[i].compareTo(array[indiceMenor]) == -1) {
+			if (array[i].compareTo(array[indiceMenor]) <= -1) {
 				indiceMenor = i;
 				swapIndiceMenor(array, i, rightIndex, i + 1);
 			}

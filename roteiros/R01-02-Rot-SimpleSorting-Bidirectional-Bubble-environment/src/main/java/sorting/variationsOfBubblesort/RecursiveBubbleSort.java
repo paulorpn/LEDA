@@ -19,7 +19,7 @@ public class RecursiveBubbleSort<T extends Comparable<T>> extends
 		if (rightIndex > leftIndex && array != null && array.length != 0 && 
 		leftIndex >= 0 && rightIndex <= array.length) {
 
-			if (array[leftIndex + 1].compareTo(array[leftIndex]) == -1) {
+			if (array[leftIndex + 1].compareTo(array[leftIndex]) <= -1) {
 				Util.swap(array, leftIndex + 1, leftIndex);
 			}
 			
