@@ -1,5 +1,7 @@
 package sorting.linearSorting;
 
+import java.util.Arrays;
+
 import sorting.AbstractSorting;
 
 /**
@@ -41,13 +43,13 @@ public class CountingSort extends AbstractSorting<Integer> {
 			Integer[] B = new Integer[array.length];
 
 			// Ordenação
-			for (int i = rightIndex; i >= 0; i--) {
+			for (int i = rightIndex; i >= leftIndex; i--) {
 				B[C[array[i]] - 1] = array[i];
 				C[array[i]] -= 1;
 			}
 
 			for (int i = leftIndex; i <= rightIndex; i++) {
-				array[i] = B[i];
+				array[i] = B[i - leftIndex];
 			}
 		}
 	}
