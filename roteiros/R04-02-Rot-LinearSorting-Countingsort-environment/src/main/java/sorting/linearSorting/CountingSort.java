@@ -40,7 +40,7 @@ public class CountingSort extends AbstractSorting<Integer> {
 				C[i] += C[i - 1];
 			}
 
-			Integer[] B = new Integer[array.length];
+			Integer[] B = new Integer[rightIndex - leftIndex + 1];
 
 			// Ordenação
 			for (int i = rightIndex; i >= leftIndex; i--) {
