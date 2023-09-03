@@ -6,27 +6,38 @@ public class FloorBinarySearchImpl implements Floor {
 
 	@Override
 	public Integer floor(Integer[] array, Integer x) {
-		
-	}
+		Integer floor = null;
 
-	private Integer binarySearch(Integer[] array, Integer x, Integer leftIndex, Integer rightIndex) {
-		Integer middle = (leftIndex + rightIndex) / 2;
-		Integer floor = array[middle];
-
-		if (array != null && array.length != 0 && leftIndex >= 0 && rightIndex <= array.length - 1 && leftIndex < rightIndex) {
-
-			if (array[middle].compareTo(x) < 0) {
-				binarySearch(array, x, middle + 1, rightIndex);
-			} else if (array[middle].compareTo(x) > 0) {
-				binarySearch(array, x, leftIndex, middle);
-			}
-		}
+		if (array != null && array.length > 0) {
+			quickSort(array, 0, array.length - 1);
+			floor = binarySearch(array, x, floor, 0, array.length - 1);
+		} 
 
 		return floor;
 	}
 
+	private Integer binarySearch(Integer[] array, Integer x, Integer floorCandidate, Integer leftIndex, Integer rightIndex) {
+		
+		if (leftIndex <= rightIndex) {
+
+			Integer middle = (leftIndex + rightIndex) / 2;
+			Integer midNumber = array[middle];
+
+			if (midNumber.compareTo(x) == 0) {
+				floorCandidate = midNumber;
+			} else if (midNumber.compareTo(x) < 0) {
+				return binarySearch(array, x, midNumber, middle + 1, rightIndex);
+			} else {
+				return binarySearch(array, x, floorCandidate, leftIndex, middle - 1);
+			}
+		}
+
+		return floorCandidate;
+	}
+
 	private void quickSort(Integer[] array, Integer leftIndex, Integer rightIndex) {
-		if (array != null && array.length != 0 && leftIndex >= 0 && rightIndex <= array.length - 1 && leftIndex < rightIndex) {
+		
+		if (leftIndex < rightIndex) {
 			
 			Integer pivot = partition(array, leftIndex, rightIndex);
 			quickSort(array, leftIndex, pivot - 1);
@@ -40,7 +51,7 @@ public class FloorBinarySearchImpl implements Floor {
 		Integer pivot = array[leftIndex];
 		Integer i = leftIndex;
 
-		if (array != null && array.length != 0 && leftIndex >= 0 && rightIndex <= array.length - 1 && leftIndex < rightIndex) {
+		if (leftIndex < rightIndex) {
 
 			for (Integer j = leftIndex + 1; j <= rightIndex; j++) {
 				if (array[j].compareTo(pivot) <= 0) {

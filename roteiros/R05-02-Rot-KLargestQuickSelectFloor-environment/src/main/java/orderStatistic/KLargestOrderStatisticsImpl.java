@@ -1,7 +1,5 @@
 package orderStatistic;
 
-import java.util.Arrays;
-
 import util.Util;
 
 /**
@@ -33,12 +31,13 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 
 	@Override
 	public T[] getKLargest(T[] array, int k) {
-		T[] out = (T[]) new Comparable[array.length - (k - 1)];
+		T[] out = (T[]) new Comparable[0];
 
-		if (k <= array.length) {
+		if (k <= array.length && array.length > 0 && k > 0) {
+			out = (T[]) new Comparable[array.length - k];
 
-			for (int i = k - 1; i < array.length; i++) {
-				out[i - (k - 1)] = orderStatistics(array, i);
+			for (int i = k; i < array.length; i++) {
+				out[i - k] = orderStatistics(array, i);
 			}
 		}
 
@@ -60,7 +59,7 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 		T orderStatistic = null;
 		quickSort(array, 0, array.length - 1);
 
-		if (k < array.length) {
+		if (k < array.length && k > 0) {
 			orderStatistic = array[k];
 		}
 
