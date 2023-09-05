@@ -1,8 +1,6 @@
-package tests.orderStatistic;
+package orderStatistic.test;
 
 import static org.junit.Assert.assertArrayEquals;
-
-import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package tests.orderStatistic;
+package orderStatistic.test;
 
 import static org.junit.Assert.assertEquals;
 
