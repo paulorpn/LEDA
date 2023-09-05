@@ -1,5 +1,9 @@
 package orderStatistic;
 
+import java.util.Arrays;
+
+import util.Util;
+
 /**
  * O quickselect eh um algoritmo baseado no quicksort para
  * descobrir/selectionar, em tempo linear, a k-esima estatistica de ordem
@@ -42,7 +46,66 @@ public class QuickSelect<T extends Comparable<T>> {
 	 *
 	 */
 	public T quickSelect(T[] array, int k) {
-		// TODO Implement your code here
-		throw new UnsupportedOperationException("Not implemented yet!");
+		T orderStatistic = null;
+
+		if (array != null && array.length > 0 && !(k < 1 || k > array.length - 1)) {
+			orderStatistic = recursiveQuickSelect(array, k, 0, array.length - 1);
+		}
+
+		return orderStatistic;
+	}
+
+	private T recursiveQuickSelect(T[] array, int k, int leftIndex, int rightIndex) {
+		int pivot = partition(array, leftIndex, rightIndex);
+
+		if (leftIndex < rightIndex) {
+
+			if (k - 1 < pivot) {
+				return recursiveQuickSelect(array, k, leftIndex, pivot - 1);
+			} else if (k - 1 > pivot) {
+				return recursiveQuickSelect(array, k, pivot + 1, rightIndex);
+			}
+		}
+
+		return array[pivot];
+	}
+
+	private int partition(T[] array, int leftIndex, int rightIndex) {
+		int pivotIndex = pickPivotIndex(array, leftIndex, rightIndex);
+		Util.swap(array, leftIndex, pivotIndex);
+
+		T pivot = array[leftIndex];
+		int i = leftIndex;
+
+		for (int j = leftIndex + 1; j <= rightIndex; j++) {
+			if (array[j].compareTo(pivot) <= 0) {
+				Util.swap(array, ++i, j);
+			}
+		}
+
+		Util.swap(array, leftIndex, i);
+
+		return i;
+	}
+
+	private int pickPivotIndex(T[] array, int leftIndex, int rightIndex) {
+		
+		int middle = (leftIndex + rightIndex) / 2;
+    
+    	T[] sorted = (T[]) new Comparable[3];
+
+		sorted[0] = array[leftIndex];
+		sorted[1] = array[middle];
+		sorted[2] = array[rightIndex];
+
+		Arrays.sort(sorted);
+
+		if (sorted[1].compareTo(array[leftIndex]) == 0) {
+			return leftIndex;
+		} else if (sorted[1].compareTo(array[middle]) == 0) {
+			return middle;
+		}
+
+		return rightIndex;
 	}
 }

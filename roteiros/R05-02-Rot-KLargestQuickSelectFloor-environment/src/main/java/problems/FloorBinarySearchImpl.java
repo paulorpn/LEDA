@@ -1,5 +1,7 @@
 package problems;
 
+import java.util.Arrays;
+
 import util.Util;
 
 public class FloorBinarySearchImpl implements Floor {
@@ -46,23 +48,37 @@ public class FloorBinarySearchImpl implements Floor {
 		}
 	}
 
-	private Integer partition(Integer[] array, Integer leftIndex, Integer rightIndex) {
-		
+	private int partition(Integer[] array, int leftIndex, int rightIndex) {
+		int pivotIndex = pickPivotIndex(array, leftIndex, rightIndex);
+		Util.swap(array, leftIndex, pivotIndex);
+
 		Integer pivot = array[leftIndex];
-		Integer i = leftIndex;
+		int i = leftIndex;
 
-		if (leftIndex < rightIndex) {
-
-			for (Integer j = leftIndex + 1; j <= rightIndex; j++) {
-				if (array[j].compareTo(pivot) <= 0) {
-					i += 1;
-					Util.swap(array, i, j);
-				}
+		for (int j = leftIndex + 1; j <= rightIndex; j++) {
+			if (array[j].compareTo(pivot) <= 0) {
+				Util.swap(array, ++i, j);
 			}
-
-			Util.swap(array, leftIndex, i);
 		}
 
+		Util.swap(array, leftIndex, i);
+
 		return i;
+	}
+
+	private int pickPivotIndex(Integer[] array, int leftIndex, int rightIndex) {
+		
+		int middle = (leftIndex + rightIndex) / 2;
+    
+    	Integer[] sorted = {array[leftIndex], array[middle], array[rightIndex]};
+		Arrays.sort(sorted);
+
+		if (sorted[1].compareTo(array[leftIndex]) == 0) {
+			return leftIndex;
+		} else if (sorted[1].compareTo(array[middle]) == 0) {
+			return middle;
+		}
+
+		return rightIndex;
 	}
 }

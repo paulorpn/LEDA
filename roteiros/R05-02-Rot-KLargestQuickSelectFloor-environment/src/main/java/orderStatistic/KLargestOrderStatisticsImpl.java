@@ -1,5 +1,7 @@
 package orderStatistic;
 
+import java.util.Arrays;
+
 import util.Util;
 
 /**
@@ -77,22 +79,41 @@ public class KLargestOrderStatisticsImpl<T extends Comparable<T>> implements KLa
 	}
 
 	private int partition(T[] array, int leftIndex, int rightIndex) {
-		
+		int pivotIndex = pickPivotIndex(array, leftIndex, rightIndex);
+		Util.swap(array, leftIndex, pivotIndex);
+
 		T pivot = array[leftIndex];
 		int i = leftIndex;
 
-		if (array != null && array.length != 0 && leftIndex >= 0 && rightIndex <= array.length - 1 && leftIndex < rightIndex) {
-
-			for (int j = leftIndex + 1; j <= rightIndex; j++) {
-				if (array[j].compareTo(pivot) <= 0) {
-					i += 1;
-					Util.swap(array, i, j);
-				}
+		for (int j = leftIndex + 1; j <= rightIndex; j++) {
+			if (array[j].compareTo(pivot) <= 0) {
+				Util.swap(array, ++i, j);
 			}
-
-			Util.swap(array, leftIndex, i);
 		}
 
+		Util.swap(array, leftIndex, i);
+
 		return i;
+	}
+
+	private int pickPivotIndex(T[] array, int leftIndex, int rightIndex) {
+		
+		int middle = (leftIndex + rightIndex) / 2;
+    
+    	T[] sorted = (T[]) new Comparable[3];
+
+		sorted[0] = array[leftIndex];
+		sorted[1] = array[middle];
+		sorted[2] = array[rightIndex];
+
+		Arrays.sort(sorted);
+
+		if (sorted[1].compareTo(array[leftIndex]) == 0) {
+			return leftIndex;
+		} else if (sorted[1].compareTo(array[middle]) == 0) {
+			return middle;
+		}
+
+		return rightIndex;
 	}
 }
