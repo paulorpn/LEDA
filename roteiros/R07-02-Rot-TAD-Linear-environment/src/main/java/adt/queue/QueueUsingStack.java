@@ -2,6 +2,8 @@ package adt.queue;
 
 import adt.stack.Stack;
 import adt.stack.StackImpl;
+import adt.stack.StackOverflowException;
+import adt.stack.StackUnderflowException;
 
 public class QueueUsingStack<T> implements Queue<T> {
 
@@ -15,32 +17,69 @@ public class QueueUsingStack<T> implements Queue<T> {
 
 	@Override
 	public void enqueue(T element) throws QueueOverflowException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (element != null) {
+			try {
+				this.stack1.push(element);
+			} catch (StackOverflowException sofe) {
+				throw new QueueOverflowException();
+			}
+		}
 	}
 
 	@Override
 	public T dequeue() throws QueueUnderflowException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		try {
+			this.disloadStack1();
+			T value = this.stack2.pop();
+			this.reloadStack1();
+
+			return value;
+		} catch (StackUnderflowException sufe) {
+			throw new QueueUnderflowException();
+		}
 	}
 
 	@Override
 	public T head() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		this.disloadStack1();
+		T value = this.stack2.top();
+		this.reloadStack1();
+
+		return value;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.stack1.isEmpty();
 	}
 
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.stack1.isFull();
+	}
+
+	// This method sends all the elements from Stack1 to Stack2
+	private void disloadStack1() {
+		while (!this.stack1.isEmpty()) {
+			try {
+				T value = this.stack1.pop();
+				try {
+					this.stack2.push(value);
+				} catch (StackOverflowException sofe) {}
+			} catch (StackUnderflowException sufe) {}
+		}
+	}
+
+	// This method sends all the elements back to Stack1
+	private void reloadStack1() {
+		while (!this.stack2.isEmpty()) {
+			try {
+				T value = this.stack2.pop();
+				try {
+					this.stack1.push(value);
+				} catch (StackOverflowException sofe) {}
+			} catch (StackUnderflowException sufe) {}
+		}
 	}
 
 }

@@ -5,43 +5,70 @@ public class CircularQueue<T> implements Queue<T> {
 	private T[] array;
 	private int tail;
 	private int head;
-	private int elements;
+	private int capacidade;
 
 	public CircularQueue(int size) {
-		array = (T[]) new Object[size];
-		head = -1;
-		tail = -1;
-		elements = 0;
+		this.array = (T[]) new Object[size];
+		this.head = -1;
+		this.tail = -1;
+		this.capacidade = size;
 	}
 
 	@Override
 	public void enqueue(T element) throws QueueOverflowException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isFull()) {
+			throw new QueueOverflowException();
+		}
+
+		if (element != null) {
+			if (isEmpty()) {
+				this.head = 0;
+				this.tail = 0;
+				this.array[0] = element;
+			} else {
+				this.tail = (tail + 1) % this.capacidade;
+				this.array[tail] = element;
+			}
+		}
 	}
 
 	@Override
 	public T dequeue() throws QueueUnderflowException {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isEmpty()) {
+			throw new QueueUnderflowException();
+		}
+
+		T value = array[head];
+
+		if (this.head == this.tail) {
+			this.head = -1;
+			this.tail = -1;
+		} else {
+			this.head = (head + 1) % this.capacidade;
+		}
+
+		return value;
 	}
 
 	@Override
 	public T head() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		T value = null;
+		
+		if (!isEmpty()) {
+			value = array[head];
+		}
+
+		return value;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.head == -1;
 	}
 
 	@Override
 	public boolean isFull() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return (this.tail + 1) % this.capacidade == this.head;
 	}
 
 }

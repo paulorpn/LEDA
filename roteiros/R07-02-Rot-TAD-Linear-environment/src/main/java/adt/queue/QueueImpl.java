@@ -7,28 +7,31 @@ public class QueueImpl<T> implements Queue<T> {
 
 	@SuppressWarnings("unchecked")
 	public QueueImpl(int size) {
-		array = (T[]) new Object[size];
-		tail = -1;
+		this.array = (T[]) new Object[size];
+		this.tail = -1;
 	}
 
 	@Override
 	public T head() {
-		return array[0];
+		return this.array[0];
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return tail == -1;
+		return this.tail == -1;
 	}
 
 	@Override
 	public boolean isFull() {
-		return tail == array.length - 1;
+		return this.tail == array.length - 1;
 	}
 
 	private void shiftLeft() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		for (int i = 1; i <= tail; i++) {
+			array[i - 1] = array[i];
+		}
+
+		this.tail -= 1;
 	}
 
 	@Override
@@ -37,7 +40,9 @@ public class QueueImpl<T> implements Queue<T> {
 			throw new QueueOverflowException();
 		}
 
-		array[++tail] = element;
+		if (element != null) {
+			this.array[++tail] = element;
+		}
 	}
 
 	@Override
@@ -46,7 +51,10 @@ public class QueueImpl<T> implements Queue<T> {
 			throw new QueueUnderflowException();
 		}
 
-		return array[tail--];
+		T value = array[0];
+		shiftLeft();
+
+		return value;
 	}
 
 }
