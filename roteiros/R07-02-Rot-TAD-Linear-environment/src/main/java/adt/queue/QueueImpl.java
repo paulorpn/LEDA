@@ -13,7 +13,13 @@ public class QueueImpl<T> implements Queue<T> {
 
 	@Override
 	public T head() {
-		return this.array[0];
+		T value = null;
+
+		if (!isEmpty()) {
+			value = this.array[0];
+		}
+		
+		return value;
 	}
 
 	@Override
@@ -52,7 +58,7 @@ public class QueueImpl<T> implements Queue<T> {
 		}
 
 		T value = array[0];
-		shiftLeft();
+		this.shiftLeft();
 
 		return value;
 	}

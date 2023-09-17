@@ -20,7 +20,7 @@ public class QueueUsingStack<T> implements Queue<T> {
 		if (element != null) {
 			try {
 				this.stack1.push(element);
-			} catch (StackOverflowException sofe) {
+			} catch (StackOverflowException e) {
 				throw new QueueOverflowException();
 			}
 		}
@@ -34,16 +34,20 @@ public class QueueUsingStack<T> implements Queue<T> {
 			this.reloadStack1();
 
 			return value;
-		} catch (StackUnderflowException sufe) {
+		} catch (StackUnderflowException e) {
 			throw new QueueUnderflowException();
 		}
 	}
 
 	@Override
 	public T head() {
-		this.disloadStack1();
-		T value = this.stack2.top();
-		this.reloadStack1();
+		T value = null;
+
+		if (!isEmpty()) {
+			this.disloadStack1();
+			value = this.stack2.top();
+			this.reloadStack1();
+		} 
 
 		return value;
 	}
@@ -65,8 +69,12 @@ public class QueueUsingStack<T> implements Queue<T> {
 				T value = this.stack1.pop();
 				try {
 					this.stack2.push(value);
-				} catch (StackOverflowException sofe) {}
-			} catch (StackUnderflowException sufe) {}
+				} catch (StackOverflowException e) {
+					e.printStackTrace();
+				}
+			} catch (StackUnderflowException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -77,8 +85,12 @@ public class QueueUsingStack<T> implements Queue<T> {
 				T value = this.stack2.pop();
 				try {
 					this.stack1.push(value);
-				} catch (StackOverflowException sofe) {}
-			} catch (StackUnderflowException sufe) {}
+				} catch (StackOverflowException e) {
+					e.printStackTrace();
+				}
+			} catch (StackUnderflowException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
