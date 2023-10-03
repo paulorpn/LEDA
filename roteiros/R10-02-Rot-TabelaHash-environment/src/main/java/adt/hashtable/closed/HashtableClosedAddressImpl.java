@@ -69,16 +69,14 @@ public class HashtableClosedAddressImpl<T> extends
 	public void insert(T element) {
 		if (element != null && search(element) == null) {
 			int hash = this.getHashFunction(element);
-			LinkedList<T> elements = (LinkedList<T>) this.table[hash];
 
-			if (elements == null) {
-				elements = new LinkedList<>();
+			if (this.table[hash] == null) {
+				this.table[hash] = new LinkedList<>();
 			} else {
 				this.COLLISIONS++;
 			}
 
-
-			elements.add(element);
+			((LinkedList<T>) this.table[hash]).add(element);
 			this.elements++;
 		}
 	}
@@ -110,9 +108,8 @@ public class HashtableClosedAddressImpl<T> extends
 
 		if (element != null) {
 			int hash = this.getHashFunction(element);
-			LinkedList<T> elements = (LinkedList<T>) this.table[hash];
 
-			if (elements != null && elements.contains(element)) {
+			if (this.table[hash] != null && ((LinkedList<T>) this.table[hash]).contains(element)) {
 				index = hash;
 			}
 		}
