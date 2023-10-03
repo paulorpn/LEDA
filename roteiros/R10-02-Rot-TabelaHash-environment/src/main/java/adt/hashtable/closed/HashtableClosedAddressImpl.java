@@ -67,7 +67,7 @@ public class HashtableClosedAddressImpl<T> extends
 
 	@Override
 	public void insert(T element) {
-		if (element != null && search(element) == null) {
+		if (element != null && this.indexOf(element) == -1) {
 			int hash = this.getHashFunction(element);
 
 			if (this.table[hash] == null) {
@@ -76,17 +76,17 @@ public class HashtableClosedAddressImpl<T> extends
 				this.COLLISIONS++;
 			}
 
-			((LinkedList<T>) this.table[hash]).add(element);
+			this.getElements(hash).add(element);
 			this.elements++;
 		}
 	}
 
 	@Override
 	public void remove(T element) {
-		int indexOf = this.indexOf(element);
+		int index = this.indexOf(element);
 
-		if (indexOf != -1) {
-			((LinkedList<T>) this.table[indexOf]).remove(element);
+		if (index != -1) {
+			this.getElements(index).remove(element);
 			this.elements--;
 		}
 	}
@@ -105,13 +105,11 @@ public class HashtableClosedAddressImpl<T> extends
 	@Override
 	public int indexOf(T element) {
 		int index = -1;
+		int hash = this.getHashFunction(element);
 
-		if (element != null) {
-			int hash = this.getHashFunction(element);
-
-			if (this.table[hash] != null && ((LinkedList<T>) this.table[hash]).contains(element)) {
+		if (element != null && this.getElements(hash) != null 
+			&& this.getElements(hash).contains(element)) {
 				index = hash;
-			}
 		}
 
 		return index;
@@ -119,6 +117,10 @@ public class HashtableClosedAddressImpl<T> extends
 
 	private int getHashFunction(T element) {
 		return ((HashFunctionClosedAddress<T>) this.hashFunction).hash(element);
+	}
+
+	private LinkedList<T> getElements(int hash) {
+		return (LinkedList<T>) this.table[hash];
 	}
 
 }
