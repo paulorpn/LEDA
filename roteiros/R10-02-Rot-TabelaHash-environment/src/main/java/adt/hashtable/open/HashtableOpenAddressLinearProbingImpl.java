@@ -18,23 +18,24 @@ public class HashtableOpenAddressLinearProbingImpl<T extends Storable> extends
 	@Override
 	public void insert(T element) {
 		if (element != null && this.indexOf(element) == -1) {
-			int probe = 0;
-
-			while (probe < this.table.length) {
-				int hash = this.getHashOf(element, probe);
-
-				if (this.table[hash] == null || this.table[hash] instanceof DELETED) {
-					this.table[hash] = element;
-					this.elements++;
-					break;
-				}
-
-				probe++;
-				this.COLLISIONS++;
+			if (this.isFull()) {
+				throw new HashtableOverflowException();
 			}
 
-			if (probe == this.table.length) {
-				throw new HashtableOverflowException();
+			this.insert(element, 0);
+		}
+	}
+
+	private void insert(T element, int probe) {
+		if (probe < this.table.length) {
+			int hash = this.getHashOf(element, probe);
+
+			if (this.table[hash] == null || this.table[hash] instanceof DELETED) {
+				this.table[hash] = element;
+				this.elements++;
+			} else {
+				this.COLLISIONS++;
+				this.insert(element, probe + 1);
 			}
 		}
 	}
@@ -62,24 +63,21 @@ public class HashtableOpenAddressLinearProbingImpl<T extends Storable> extends
 
 	@Override
 	public int indexOf(T element) {
+		return this.indexOf(element, 0);
+	}
+
+	private int indexOf(T element, int probe) {
 		int index = -1;
 
 		if (element != null) {
-			int probe = 0;
+			int hash = this.getHashOf(element, probe);
 
-			while (probe < this.table.length) {
-				int hash = this.getHashOf(element, probe);
-
-				if (this.table[hash] == null) {
-					break;
-				}
-				
+			if (probe < this.table.length && this.table[hash] != null) {
 				if (this.table[hash].equals(element)) {
 					index = hash;
-					break;
+				} else {
+					return this.indexOf(element, probe + 1);
 				}
-
-				probe++;
 			}
 		}
 
