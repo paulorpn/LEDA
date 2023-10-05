@@ -56,8 +56,10 @@ public class StudentTestHashtableOpenAddressQuadraticProbing {
 		table1.remove(new HashtableElement(17)); // elemento inexistente
 		assertEquals(6, table1.size());
 
+		table1.remove(new HashtableElement(2));
+
 		table1.remove(new HashtableElement(12)); // elemento existente
-		assertEquals(5, table1.size());
+		assertEquals(4, table1.size());
 		assertNull(table1.search(new HashtableElement(12)));
 	}
 
