@@ -10,20 +10,56 @@ public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements Simpl
 
 	@Override
 	public boolean equals(BST<T> tree1, BST<T> tree2) {
-		// TODO Implement this method
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.equals((BSTNode<T>) tree1.getRoot(), (BSTNode<T>) tree2.getRoot());
+	}
+
+	private boolean equals(BSTNode<T> tree1Node, BSTNode<T> tree2Node) {
+		boolean equals = false;
+
+		if (tree1Node.isEmpty() && tree2Node.isEmpty()) {
+			equals = true;
+		} else if (!tree1Node.isEmpty() && !tree2Node.isEmpty()) {
+			if (tree1Node.equals(tree2Node)) {
+				equals = this.equals((BSTNode<T>) tree1Node.getLeft(), (BSTNode<T>) tree2Node.getLeft());
+				equals = this.equals((BSTNode<T>) tree1Node.getRight(), (BSTNode<T>) tree2Node.getRight());
+			}
+		}
+
+		return equals;
 	}
 
 	@Override
 	public boolean isSimilar(BST<T> tree1, BST<T> tree2) {
-		// TODO Implement this method
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.isSimilar((BSTNode<T>) tree1.getRoot(), (BSTNode<T>) tree2.getRoot());
 	}
+
+	private boolean isSimilar(BSTNode<T> tree1Node, BSTNode<T> tree2Node) {
+		boolean isSimilar = false;
+
+		if (tree1Node.isEmpty() && tree2Node.isEmpty()) {
+			isSimilar = true;
+		} else if (!tree1Node.isEmpty() && !tree2Node.isEmpty()) {
+			isSimilar = this.isSimilar((BSTNode<T>) tree1Node.getLeft(), (BSTNode<T>) tree2Node.getLeft());
+			isSimilar = this.isSimilar((BSTNode<T>) tree1Node.getRight(), (BSTNode<T>) tree2Node.getRight());
+		}
+
+		return isSimilar;
+	}
+
 
 	@Override
 	public T orderStatistic(BST<T> tree, int k) {
-		// TODO Implement this method
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return this.orderStatistic((BSTNode<T>) tree.getRoot(), k, tree.size());
+	}
+
+	private T orderStatistic(BSTNode<T> current, int k, int count) {
+		T orderStatistic = null;
+
+		if (!current.isEmpty()) {
+			orderStatistic = this.orderStatistic((BSTNode<T>) current.getLeft(), k, count);
+		}
+
+		return orderStatistic;
 	}
 
 }
