@@ -49,17 +49,29 @@ public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements Simpl
 
 	@Override
 	public T orderStatistic(BST<T> tree, int k) {
-		return this.orderStatistic((BSTNode<T>) tree.getRoot(), k, tree.size());
-	}
-
-	private T orderStatistic(BSTNode<T> current, int k, int count) {
 		T orderStatistic = null;
 
-		if (!current.isEmpty()) {
-			orderStatistic = this.orderStatistic((BSTNode<T>) current.getLeft(), k, count);
+		if (k >= 1) {
+			this.orderStatistic((BSTNode<T>) tree.getRoot(), orderStatistic, k);
 		}
 
 		return orderStatistic;
+	}
+
+	private void orderStatistic(BSTNode<T> current, T orderStatistic, int k) {
+		if (!current.isEmpty() && k != 0) {
+			this.orderStatistic((BSTNode<T>) current.getLeft(), orderStatistic, k);
+			
+			k--;
+			
+			if (k == 0) {
+				orderStatistic = current.getData();
+			}
+
+			if (orderStatistic == null) {
+				this.orderStatistic((BSTNode<T>) current.getRight(), orderStatistic, k);
+			}
+		}
 	}
 
 }
