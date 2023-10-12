@@ -7,6 +7,8 @@ package adt.bst;
  * @param <T>
  */
 public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements SimpleBSTManipulation<T> {
+	
+	private int count;
 
 	@Override
 	public boolean equals(BST<T> tree1, BST<T> tree2) {
@@ -46,32 +48,36 @@ public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements Simpl
 		return isSimilar;
 	}
 
-
 	@Override
 	public T orderStatistic(BST<T> tree, int k) {
 		T orderStatistic = null;
 
-		if (k >= 1) {
-			this.orderStatistic((BSTNode<T>) tree.getRoot(), orderStatistic, k);
+		if (k >= 1 && k <= tree.size()) {
+			this.count = 0;
+			orderStatistic = this.orderStatistic((BSTNode<T>) tree.getRoot(), k);
 		}
 
 		return orderStatistic;
 	}
 
-	private void orderStatistic(BSTNode<T> current, T orderStatistic, int k) {
-		if (!current.isEmpty() && k != 0) {
-			this.orderStatistic((BSTNode<T>) current.getLeft(), orderStatistic, k);
-			
-			k--;
-			
-			if (k == 0) {
+	private T orderStatistic(BSTNode<T> current, int k) {
+		T orderStatistic = null;
+
+		if (!current.isEmpty()) {
+			orderStatistic = this.orderStatistic((BSTNode<T>) current.getLeft(), k);
+
+			this.count++;
+
+			if (count == k) {
 				orderStatistic = current.getData();
 			}
 
 			if (orderStatistic == null) {
-				this.orderStatistic((BSTNode<T>) current.getRight(), orderStatistic, k);
+				orderStatistic = this.orderStatistic((BSTNode<T>) current.getRight(), k);
 			}
 		}
+
+		return orderStatistic;
 	}
 
 }

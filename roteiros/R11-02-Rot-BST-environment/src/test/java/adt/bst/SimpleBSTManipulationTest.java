@@ -57,6 +57,6 @@ public class SimpleBSTManipulationTest {
     public void testOrderStatistic() {
         this.fillTree();
 
-        assertEquals(new Integer(-40), impl.orderStatistic(tree1, 1));
+        assertEquals(new Integer(5), impl.orderStatistic(tree3, 4));
     }
 }
