@@ -1,5 +1,7 @@
 package adt.bst;
 
+import adt.bt.BTNode;
+
 /**
  * 
  * Performs consistency validations within a BST instance
@@ -31,26 +33,55 @@ public class BSTVerifierImpl<T extends Comparable<T>> implements BSTVerifier<T> 
 		return isBST;
 	}
 
-	private boolean isBST(BSTNode<T> current) {
+	private boolean isBST(BSTNode<T> currentNode) {
 		boolean isBST = true;
 
-		if (!current.isEmpty()) {
-			if (!current.getLeft().isEmpty()) {
-				if (current.getData().compareTo(current.getLeft().getData()) < 0) {
-					isBST = false;
-				}
+		if (!currentNode.isEmpty()) {
+			if (isValidLeftNode(currentNode) && isValidRightNode(currentNode)) {
+				isBST = isBST((BSTNode<T>) currentNode.getLeft())
+						&& isBST((BSTNode<T>) currentNode.getRight());
+			} else {
+				isBST = false;
 			}
-
-			if (!current.getRight().isEmpty()) {
-				if (current.getData().compareTo(current.getRight().getData()) > 0) {
-					isBST = false;
-				}
-			}
-
-			isBST = isBST((BSTNode<T>) current.getLeft()) && isBST((BSTNode<T>) current.getRight());
 		}
 
 		return isBST;
+	}
+
+	private boolean isValidRightNode(BSTNode<T> currentNode) {
+		return isValidRightNode(currentNode.getRight(), currentNode);
+	}
+
+	private boolean isValidRightNode(BTNode<T> right, BSTNode<T> currentNode) {
+		boolean isValidRightNode = true;
+
+		if (!right.isEmpty()) {
+			if (right.getData().compareTo(currentNode.getData()) > 0) {
+				isValidRightNode = isValidRightNode(right.getLeft(), currentNode)
+						&& isValidRightNode(right.getRight(), currentNode);
+			} else {
+				isValidRightNode = false;
+			}
+		}
+		return isValidRightNode;
+	}
+
+	private boolean isValidLeftNode(BTNode<T> currentNode) {
+		return isValidLeftNode(currentNode.getLeft(), currentNode);
+	}
+
+	private boolean isValidLeftNode(BTNode<T> left, BTNode<T> currentNode) {
+		boolean result = true;
+		if (!left.isEmpty()) {
+			if (left.getData().compareTo(currentNode.getData()) < 0) {
+				result = isValidLeftNode(left.getLeft(), currentNode)
+						&& isValidLeftNode(left.getRight(), currentNode);
+			} else {
+				result = false;
+			}
+		}
+		return result;
+
 	}
 	
 }

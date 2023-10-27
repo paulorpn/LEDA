@@ -24,7 +24,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		return this.height(this.root);
 	}
 
-	private int height(BSTNode<T> current) {
+	protected int height(BSTNode<T> current) {
 		int height = -1;
 
 		if (!current.isEmpty()) {
