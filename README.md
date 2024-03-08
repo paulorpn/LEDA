@@ -15,7 +15,7 @@ R02  | Ordenação por comparação (MergeSort, QuickSort) | [Link](R02-02-Rot-R
 R03  | Selection sort | [Link](R03-02-Rot-Order-statistics-selection-environment)
 R04  | Ordenação em tempo linear (CountingSort) | [Link](R04-02-Rot-LinearSorting-Countingsort-environment)
 R05  | Cálculo de estatística de ordem e floor (BinarySearch, QuickSelect) | [Link](R05-02-Rot-KLargestQuickSelectFloor-environment)
-R06  | Busca binária (prova de reposição anterior) | [Link](R06-02-Rot-BinarySearch-Raiz-environment)
+R06  | Busca binária | [Link](R06-02-Rot-BinarySearch-Raiz-environment)
 R07  | Tipos abstratos de dados (Stack, Queue) | [Link](R07-02-Rot-TAD-Linear-environment)
 R08  | Lista encadeada (LinkedList) | [Link](R08-02-Rot-Linked-List-environment)
 R10  | Tabelas Hash | [Link](R10-02-Rot-TabelaHash-environment)
